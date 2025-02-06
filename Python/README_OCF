@@ -1,0 +1,68 @@
+# Orientational Correlation Function (OCF) Calculation
+#
+# Renato D. Cunha, Ph.D.
+# Computational Photobiology Lab
+# renatodias@ub.edu / renato.cunha8@gmail.com
+# Cite us :-)
+#
+#
+#
+## Overview
+
+This project involves the calculation of the orientational correlation function (OCF) for the backbone Cα atoms of proteins from PDB files. 
+The OCF provides insights into the stiffness of protein backbones by measuring the correlation between unit vectors connecting consecutive Cα atoms. 
+The decay of this function can be fitted to an exponential model to estimate the persistence length of the protein, 
+which is a measure of the maximum size over which structural fluctuations are correlated.
+
+## Calculation Details
+
+### Orientational Correlation Function
+
+The orientational correlation function \( C(s) \) is defined as:
+\[ C(s) = \langle \mathbf{n}_i \cdot \mathbf{n}_{i+s} \rangle \]
+where:
+- \( s \) is the pairwise residue separation (contour length).
+- \( \mathbf{n}_i \) is the unit vector connecting Cα atoms of two consecutive residues.
+
+### Exponential Decay Model
+
+The decay of \( C(s) \) is modeled using an exponential decay function:
+\[ C(s) = e^{-s/k} \]
+where:
+- \( k \) is a parameter that corresponds to the persistence length.
+
+The persistence length \( l_p \) is estimated as:
+\[ l_p = k \times 3.8 \, \text{Å} \]
+where 3.8 Å is the approximate distance between consecutive Cα atoms in a protein backbone.
+
+## Script Description
+
+The script processes all PDB files in the current directory, calculates the OCF for each file, fits the decay to an exponential model 
+to estimate \( k \) and \( l_p \), and averages the OCFs across all files. The results are saved to a log file (`OCF.log`) 
+and the average OCF is plotted along with the fitted exponential curve.
+
+### Dependencies
+
+- `mdtraj`
+- `numpy`
+- `matplotlib`
+- `scipy`
+- `os`
+
+### Installation
+
+To install the required dependencies, you can use pip:
+```bash
+pip install mdtraj numpy matplotlib scipy
+
+Usage
+Place the script OCF_v2.py in the directory containing your PDB files.
+Run the script using Python:
+python OCF_v2.py
+
+Output
+The script generates the following outputs:
+
+OCF.log: A log file containing the filename, for each processed PDB file.
+graphic_OCF.dat: A data file containing the average orientational correlation function.
+A plot showing the average OCF and the fitted exponential decay curve.
